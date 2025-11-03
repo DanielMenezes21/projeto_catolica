@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Projetos</title>
+</head>
+<body>
+  <h1>Projetos Cadastrados</h1>
+  <table border="1">
+    <tr>
+      <th>Nome</th>
+      <th>Código</th>
+      <th>Valores Mensais</th>
+    </tr>
+    {% for p in projetos %}
+    <tr>
+      <td>{{ p.nome_projeto }}</td>
+      <td>{{ p.codigo_produto }}</td>
+      <td>{{ p.valores_mensais }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <a href="{% url 'exportar_planilha' %}">Exportar para Excel</a>
+  <br>
+  <a href="{% url 'criar_projeto' %}">Novo Projeto</a>
+</body>
+</html>

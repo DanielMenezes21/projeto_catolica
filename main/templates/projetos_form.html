@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Criar Projeto</title>
+  <style>
+    .mes-campo {
+      display: none;
+      margin-left: 20px;
+    }
+    button.mes-toggle {
+      margin: 3px 0;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Criar Projeto</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    <p>
+      <label for="id_nome_projeto">Nome do projeto:</label>
+      {{ form.nome_projeto }}
+    </p>
+    <p>
+      <label for="id_codigo_produto">Código do produto:</label>
+      {{ form.codigo_produto }}
+    </p>
+
+    <h3>Gastos Mensais</h3>
+
+    {% for field in form %}
+      {% if field.name not in "nome_projeto codigo_produto" %}
+        <div>
+          <button type="button" class="mes-toggle" data-mes="{{ field.name }}">➕ {{ field.label }}</button>
+          <div class="mes-campo" id="campo-{{ field.name }}">
+            {{ field }}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    <br>
+    <button type="submit">Salvar</button>
+  </form>
+
+  <script>
+    document.querySelectorAll('.mes-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mes = btn.dataset.mes;
+        const campo = document.getElementById(`campo-${mes}`);
+        const aberto = campo.style.display === 'block';
+        campo.style.display = aberto ? 'none' : 'block';
+        btn.textContent = (aberto ? '➕ ' : '➖ ') + btn.textContent.slice(2);
+      });
+    });
+  </script>
+</body>
+</html>
+
+
