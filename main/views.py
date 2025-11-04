@@ -12,12 +12,12 @@ def criar_projeto(request):
             return redirect('listar_projetos')
     else:
         form = ProjetoForm()
-    return render(request, 'projetos_form.html', {'form': form})
+    return render(request, 'page/projetos_form.html', {'form': form})
 
 
 def listar_projetos(request):
     projetos = Projeto.objects.all()
-    return render(request, 'projetos_lista.html', {'projetos': projetos})
+    return render(request, 'page/projetos_lista.html', {'projetos': projetos})
 
 
 def exportar_planilha(request):

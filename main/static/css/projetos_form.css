@@ -1,0 +1,95 @@
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Estilos do formulário */
+form {
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: inline-block;
+    width: 150px;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+h3 {
+    color: #444;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+/* Estilos dos botões de mês */
+.mes-toggle {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    border-radius: 4px;
+    width: 100%;
+    text-align: left;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+.mes-toggle:hover {
+    background-color: #e9ecef;
+    border-color: #ccc;
+}
+
+/* Estilos dos campos de mês */
+.mes-campo {
+    padding: 10px;
+    margin: 5px 0 15px 0;
+    border-left: 3px solid #007bff;
+    background-color: #f8f9fa;
+}
+
+.mes-campo input {
+    width: calc(100% - 20px);
+    margin: 5px 10px;
+}
+
+/* Botão de salvar */
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
