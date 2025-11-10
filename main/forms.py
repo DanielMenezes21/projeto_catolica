@@ -1,5 +1,6 @@
 from django import forms
 from .models import Projeto
+import json
 
 MESES = [
     ('janeiro', 'Janeiro'),
@@ -16,9 +17,27 @@ MESES = [
     ('dezembro', 'Dezembro'),
 ]
 
+def get_product_choices():
+    try:
+        with open('main/Lista_de_Produtos_Portal_de_Compras.json', 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            choices = [('', 'Selecione um produto')]
+            for item in data['Sheet']:
+                if 'CODIGOPRD' in item and 'NOME CONTA' in item:
+                    codigo = item['CODIGOPRD']
+                    nome = item['NOME CONTA']
+                    choices.append((codigo, f'{codigo} - {nome}'))
+            return choices
+    except Exception as e:
+        print(f"Error loading product choices: {e}")
+        return [('', 'Error loading products')]
+
 class ProjetoForm(forms.ModelForm):
     nome_projeto = forms.CharField(label='Nome do Projeto', max_length=255)
-    codigo_produto = forms.CharField(label='Código do Produto', max_length=50)
+    codigo_produto = forms.ChoiceField(
+        choices=get_product_choices(),
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
 
     # Campos mensais opcionais
     for mes, label in MESES:
