@@ -4,7 +4,13 @@ import json
 
 class Projeto(models.Model):
     nome_projeto = models.CharField(max_length=255)
-    codigo_produto = models.CharField(max_length=50)
+    tipo_conta = models.CharField(
+        'Tipo de conta',
+        max_length=20,
+        choices=[('DGA', 'DGA'), ('Investimentos', 'Investimentos')],
+        default='DGA'
+    )
+    codigo_produto = models.CharField(max_length=255)
     valores_mensais = models.JSONField(encoder=DjangoJSONEncoder, default=dict, blank=True)
 
     def __str__(self):

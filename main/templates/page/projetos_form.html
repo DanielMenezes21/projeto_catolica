@@ -24,18 +24,23 @@
   <form method="post">
     {% csrf_token %}
     <p>
-      <label for="id_nome_projeto">Nome do projeto:</label>
+      <label for="id_nome_projeto">Projeto / Atividade</label>
       {{ form.nome_projeto }}
     </p>
+
     <p>
-      <label for="id_codigo_produto">Código do produto:</label>
+      <label for="id_nome_projeto">Tipo de Conta</label>
+      {{ form.tipo_conta }}
+    </p>
+    <p>
+      <label for="id_codigo_produto">Conta Contábil (para DGA)</label>
       {{ form.codigo_produto }}
     </p>
 
     <h3>Gastos Mensais</h3>
 
     {% for field in form %}
-      {% if field.name not in "nome_projeto codigo_produto" %}
+      {%  if field.name != 'nome_projeto' and field.name != 'tipo_conta' and field.name != 'codigo_produto'  %}
         <div>
           <button type="button" class="mes-toggle" data-mes="{{ field.name }}">➕ {{ field.label }}</button>
           <div class="mes-campo" id="campo-{{ field.name }}">

@@ -1,6 +1,9 @@
 from django import forms
 from .models import Projeto
-import json
+import os
+from django.conf import settings
+import pandas as pd
+
 
 MESES = [
     ('janeiro', 'Janeiro'),
@@ -19,24 +22,48 @@ MESES = [
 
 def get_product_choices():
     try:
-        with open('main/Lista_de_Produtos_Portal_de_Compras.json', 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            choices = [('', 'Selecione um produto')]
-            for item in data['Sheet']:
-                if 'CODIGOPRD' in item and 'NOME CONTA' in item:
-                    codigo = item['CODIGOPRD']
-                    nome = item['NOME CONTA']
-                    choices.append((codigo, f'{codigo} - {nome}'))
-            return choices
+        
+        excel_path = os.path.join(settings.BASE_DIR, 'main', 'codigo_produtos.xlsx')
+        
+        if not os.path.exists(excel_path):
+            alt = os.path.join(settings.BASE_DIR, 'teste.xlsx')
+            if os.path.exists(alt):
+                excel_path = alt
+
+        if not os.path.exists(excel_path):
+            print(f"Arquivo não encontrado: {excel_path}")
+            return [('', 'Arquivo de produtos não encontrado')]
+
+        df = pd.read_excel(excel_path, engine='openpyxl')
+        choices = [('', 'Selecione um produto')]
+
+        for _, row in df.iterrows():
+            valor_completo = str(row.iloc[0]).strip()
+            if valor_completo and valor_completo.lower() != 'nan':
+                choices.append((valor_completo, valor_completo))
+
+        return choices
     except Exception as e:
         print(f"Error loading product choices: {e}")
-        return [('', 'Error loading products')]
+        return [('', 'Erro ao carregar produtos')]
+
+    
 
 class ProjetoForm(forms.ModelForm):
     nome_projeto = forms.CharField(label='Nome do Projeto', max_length=255)
+
+    tipo_conta = forms.ChoiceField(
+        label='Tipo de Conta',
+        choices=[('DGA', 'DGA'), ('Investimentos', 'Investimentos')],
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
     codigo_produto = forms.ChoiceField(
         choices=get_product_choices(),
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={
+            'class': 'form-control',
+            'style': 'width: 100%; padding: 8px;'
+        })
     )
 
     # Campos mensais opcionais
@@ -46,14 +73,14 @@ class ProjetoForm(forms.ModelForm):
             required=False,
             min_value=0,
             widget=forms.TextInput(attrs={
-                'placeholder': 'Digite o valor (ex: 1200.50)',
+                'placeholder': 'Digite o valor (ex: 1200)',
                 'inputmode': 'decimal',
             })
         )
 
     class Meta:
         model = Projeto
-        fields = ['nome_projeto', 'codigo_produto']
+        fields = ['nome_projeto', 'tipo_conta', 'codigo_produto']
 
     def save(self, commit=True):
         """Salva o projeto com os valores mensais em formato JSON."""
