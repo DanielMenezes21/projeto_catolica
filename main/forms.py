@@ -45,7 +45,7 @@ def get_product_choices():
         return choices
     except Exception as e:
         print(f"Error loading product choices: {e}")
-        return [('', 'Erro ao carregar produtos')]
+        return [('', 'Erro')]
 
     
 
