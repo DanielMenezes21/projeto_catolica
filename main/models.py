@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.serializers.json import DjangoJSONEncoder
-import json
+
 
 class Projeto(models.Model):
     nome_projeto = models.CharField(max_length=255)
@@ -12,6 +12,7 @@ class Projeto(models.Model):
     )
     codigo_produto = models.CharField(max_length=255)
     valores_mensais = models.JSONField(encoder=DjangoJSONEncoder, default=dict, blank=True)
+    valor_total = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 
     def __str__(self):
         return f"{self.nome_projeto} ({self.codigo_produto})"

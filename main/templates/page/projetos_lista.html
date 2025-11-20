@@ -10,20 +10,26 @@
   <table>
     <tr>
       <th>Nome do Projeto</th>
-     <th>Tipo de Conta</th>
+      <th>Tipo de Conta</th>
       <th>Código do Produto</th>
       <th>Valores Mensais</th>
+      <th>Total</th>
     </tr>
     {% for p in projetos %}
     <tr>
       <td>{{ p.nome_projeto }}</td>
-     <td>{{ p.tipo_conta }}</td>
+      <td>{{ p.tipo_conta }}</td>
       <td>{{ p.codigo_produto }}</td>
       <td>
-        {% for mes, valor in p.valores_mensais.items %}
-          <strong>{{ mes|title }}:</strong> R$ {{ valor|floatformat:2 }}<br>
-        {% endfor %}
+        {% if p.valores_mensais %}
+          {% for mes, valor in p.valores_mensais.items %}
+            <strong>{{ mes|title }}:</strong> R$ {{ valor|floatformat:2 }}<br>
+          {% endfor %}
+        {% else %}
+          -
+        {% endif %}
       </td>
+      <td>R$ {{ p.valor_total|floatformat:2 }}</td>
     </tr>
     {% endfor %}
   </table>

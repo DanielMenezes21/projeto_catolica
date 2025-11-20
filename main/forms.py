@@ -77,23 +77,36 @@ class ProjetoForm(forms.ModelForm):
                 'inputmode': 'decimal',
             })
         )
+    
+    valor_total = forms.DecimalField(
+        label='Total',
+        required=False,
+        widget=forms.TextInput(attrs={
+            'readonly': 'readonly',
+            'class': 'form-control',
+            'style': 'background-color: #f0f0f0;'
+        })
+    )
 
     class Meta:
         model = Projeto
-        fields = ['nome_projeto', 'tipo_conta', 'codigo_produto']
+        fields = ['nome_projeto', 'tipo_conta', 'codigo_produto', 'valor_total']
 
     def save(self, commit=True):
         """Salva o projeto com os valores mensais em formato JSON."""
         instance = super().save(commit=False)
         valores = {}
+        total = 0
 
         # Coleta apenas os meses preenchidos
         for mes, _ in MESES:
             valor = self.cleaned_data.get(mes)
-            if valor is not None:
+            if valor is not None and valor > 0:
                 valores[mes] = float(valor)
+                total += float(valor)
 
         instance.valores_mensais = valores
+        instance.valor_total = total
 
         if commit:
             instance.save()

@@ -40,7 +40,7 @@
     <h3>Gastos Mensais</h3>
 
     {% for field in form %}
-      {%  if field.name != 'nome_projeto' and field.name != 'tipo_conta' and field.name != 'codigo_produto'  %}
+      {%  if field.name != 'nome_projeto' and field.name != 'tipo_conta' and field.name != 'codigo_produto' and field.name != 'valor_total' %}
         <div>
           <button type="button" class="mes-toggle" data-mes="{{ field.name }}">➕ {{ field.label }}</button>
           <div class="mes-campo" id="campo-{{ field.name }}">
@@ -50,11 +50,31 @@
       {% endif %}
     {% endfor %}
 
+    <p style="margin-top: 20px; font-weight: bold;">
+      <label for="id_valor_total">Total:</label>
+      {{ form.valor_total }}
+    </p>
+
     <br>
     <button type="submit">Salvar</button>
   </form>
 
   <script>
+
+    document.querySelectorAll('input[type="number"], input[inputmode="decimal"]').forEach(input => {
+      input.addEventListener('change', calcularTotal);
+    });
+
+    function calcularTotal() {
+      let total = 0;
+      document.querySelectorAll('input[inputmode="decimal"]').forEach(input => {
+        if (input.value) {
+          total += parseFloat(input.value) || 0;
+        }
+      });
+      document.getElementById('id_valor_total').value = total.toFixed(2);
+    }
+
     document.querySelectorAll('.mes-toggle').forEach(btn => {
       btn.addEventListener('click', () => {
         const mes = btn.dataset.mes;
