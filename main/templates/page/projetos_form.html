@@ -40,7 +40,7 @@
     <h3>Gastos Mensais</h3>
 
     {% for field in form %}
-      {%  if field.name != 'nome_projeto' and field.name != 'tipo_conta' and field.name != 'codigo_produto' and field.name != 'valor_total' %}
+      {%  if field.name != 'nome_projeto' and field.name != 'tipo_conta' and field.name != 'codigo_produto' and field.name != 'valor_total' and field.name != 'e_recorrente' and field.name != 'obrigacao_legal' %}
         <div>
           <button type="button" class="mes-toggle" data-mes="{{ field.name }}">➕ {{ field.label }}</button>
           <div class="mes-campo" id="campo-{{ field.name }}">
@@ -49,6 +49,16 @@
         </div>
       {% endif %}
     {% endfor %}
+
+    <p>
+      <label for="id_e_recorrente">É Recorrente?</label>
+      {{ form.e_recorrente }}
+    </p>
+
+    <p>
+      <label for="id_obrigacao_legal">Obrigação Legal?</label>
+      {{ form.obrigacao_legal }}
+    </p>
 
     <p style="margin-top: 20px; font-weight: bold;">
       <label for="id_valor_total">Total:</label>

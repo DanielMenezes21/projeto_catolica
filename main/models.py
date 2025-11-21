@@ -14,6 +14,20 @@ class Projeto(models.Model):
     valores_mensais = models.JSONField(encoder=DjangoJSONEncoder, default=dict, blank=True)
     valor_total = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 
+    e_recorrente = models.CharField(
+        'É Recorrente?',
+        max_length=3,
+        choices=[('Sim', 'Sim'), ('Não', 'Não')],
+        default='Não'
+    )
+    
+    obrigacao_legal = models.CharField(
+        'Obrigação Legal?',
+        max_length=3,
+        choices=[('Sim', 'Sim'), ('Não', 'Não')],
+        default='Não'
+    )
+
     def __str__(self):
         return f"{self.nome_projeto} ({self.codigo_produto})"
 

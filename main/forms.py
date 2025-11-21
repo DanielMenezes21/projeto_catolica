@@ -88,12 +88,24 @@ class ProjetoForm(forms.ModelForm):
         })
     )
 
+    e_recorrente = forms.ChoiceField(
+        label='É Recorrente?',
+        choices=[('Não', 'Não'), ('Sim', 'Sim')],
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    obrigacao_legal = forms.ChoiceField(
+        label='Obrigação Legal?',
+        choices=[('Não', 'Não'), ('Sim', 'Sim')],
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
     class Meta:
         model = Projeto
-        fields = ['nome_projeto', 'tipo_conta', 'codigo_produto', 'valor_total']
+        fields = ['nome_projeto', 'tipo_conta', 'codigo_produto', 'valor_total', 'e_recorrente', 'obrigacao_legal']
 
     def save(self, commit=True):
-        """Salva o projeto com os valores mensais em formato JSON."""
+        
         instance = super().save(commit=False)
         valores = {}
         total = 0
