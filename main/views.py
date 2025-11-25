@@ -26,3 +26,13 @@ def exportar_planilha(request):
     projetos = Projeto.objects.all()
     return create_projetos_excel_response(projetos, filename='projetos.xlsx')
 
+
+def deletar_projeto(request, projeto_id):
+    try:
+        projeto = Projeto.objects.get(id=projeto_id)
+        projeto.delete()
+    except Projeto.DoesNotExist:
+        pass
+    return redirect('listar_projetos')
+
+
