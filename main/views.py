@@ -36,3 +36,21 @@ def deletar_projeto(request, projeto_id):
     return redirect('listar_projetos')
 
 
+def editar_projeto(request, projeto_id):
+    try:
+        projeto = Projeto.objects.get(id=projeto_id)
+    except Projeto.DoesNotExist:
+        return redirect('listar_projetos')
+    
+    if request.method == 'POST':
+        form = ProjetoForm(request.POST, instance=projeto)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_projetos')
+    else:
+        form = ProjetoForm(instance=projeto)
+    
+    return render(request, 'page/projetos_form.html', {'form': form, 'edit': True, 'projeto': projeto})
+
+
+

@@ -73,3 +73,50 @@ tr:hover {
 .new-button:hover {
     background-color: #0056b3;
 }
+
+/* Coluna de ações */
+.acoes {
+    text-align: center;
+    padding: 8px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-editar {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #ffc107;
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-editar:hover {
+    background-color: #ffb800;
+    transform: scale(1.1);
+}
+
+.btn-deletar {
+    background-color: #dc3545;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-deletar:hover {
+    background-color: #c82333;
+    transform: scale(1.1);
+}
+
+.btn-deletar:active {
+    background-color: #bd2130;
+}
