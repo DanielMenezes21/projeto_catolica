@@ -20,4 +20,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),  # 👈 Inclui as rotas do app 'main'
+    path('select2/', include('django_select2.urls')),
 ]

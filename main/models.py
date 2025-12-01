@@ -13,7 +13,9 @@ class Projeto(models.Model):
         choices=[('DGA', 'DGA'), ('Investimentos', 'Investimentos')],
         default='DGA'
     )
-    codigo_produto = models.CharField(max_length=255)
+   
+
+    codigo_produto = models.TextField('Códigos de Produtos', blank=True, default='')
     valores_mensais = models.JSONField(encoder=DjangoJSONEncoder, default=dict, blank=True)
     valor_total = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 

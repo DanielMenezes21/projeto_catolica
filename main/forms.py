@@ -3,6 +3,7 @@ from .models import Projeto
 import os
 from django.conf import settings
 import pandas as pd
+from django_select2.forms import Select2MultipleWidget
 
 
 MESES = [
@@ -69,12 +70,22 @@ class ProjetoForm(forms.ModelForm):
         choices=[('DGA', 'DGA'), ('Investimentos', 'Investimentos')],
         widget=forms.Select(attrs={'class': 'form-control'})
     )
-
+    '''
     codigo_produto = forms.ChoiceField(
         choices=get_product_choices(),
         widget=forms.Select(attrs={
             'class': 'form-control',
             'style': 'width: 100%; padding: 8px;'
+        })
+    )'''
+
+    codigo_produto = forms.MultipleChoiceField(
+        label='Conta Contábil (para DGA)',
+        choices=get_product_choices(),
+        widget=Select2MultipleWidget(attrs={
+            'class': 'form-control',
+            'data-placeholder': 'Selecione as contas...',
+            'style': 'width: 100%;'
         })
     )
 
@@ -131,6 +142,9 @@ class ProjetoForm(forms.ModelForm):
 
         instance.valores_mensais = valores
         instance.valor_total = total
+
+        codigos_selecionados = self.cleaned_data.get('codigo_produto', [])
+        instance.codigo_produto = ', '.join(codigos_selecionados) if codigos_selecionados else ''
 
         if commit:
             instance.save()
