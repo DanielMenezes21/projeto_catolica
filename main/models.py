@@ -4,6 +4,9 @@ from django.core.serializers.json import DjangoJSONEncoder
 
 class Projeto(models.Model):
     nome_projeto = models.CharField(max_length=255)
+
+    justificativa = models.CharField(max_length=255, default='nenhuma')
+
     tipo_conta = models.CharField(
         'Tipo de conta',
         max_length=20,

@@ -10,6 +10,7 @@
   <table>
     <tr>
       <th>Nome do Projeto</th>
+      <th>Objetivo / justificativa</th>
       <th>Tipo de Conta</th>
       <th>Código do Produto</th>
       <th>Valores Mensais</th>
@@ -20,6 +21,7 @@
     {% for p in projetos %}
     <tr>
       <td>{{ p.nome_projeto }}</td>
+      <td>{{ p.justificativa }}</td>
       <td>{{ p.tipo_conta }}</td>
       <td>{{ p.codigo_produto }}</td>
       <td>

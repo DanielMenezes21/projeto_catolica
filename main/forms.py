@@ -20,6 +20,16 @@ MESES = [
     ('dezembro', 'Dezembro'),
 ]
 
+CAMPOS_EXCLUIR_MESES = [
+    'nome_projeto',
+    'tipo_conta',
+    'codigo_produto',
+    'valor_total',
+    'e_recorrente',
+    'obrigacao_legal',
+    'justificativa'
+]
+
 def get_product_choices():
     try:
         
@@ -51,6 +61,8 @@ def get_product_choices():
 
 class ProjetoForm(forms.ModelForm):
     nome_projeto = forms.CharField(label='Nome do Projeto', max_length=255)
+
+    justificativa = forms.CharField(label='Objetivo / justificativa' , max_length=255)
 
     tipo_conta = forms.ChoiceField(
         label='Tipo de Conta',
@@ -102,7 +114,7 @@ class ProjetoForm(forms.ModelForm):
 
     class Meta:
         model = Projeto
-        fields = ['nome_projeto', 'tipo_conta', 'codigo_produto', 'valor_total', 'e_recorrente', 'obrigacao_legal']
+        fields = ['nome_projeto', 'justificativa', 'tipo_conta', 'codigo_produto', 'valor_total', 'e_recorrente', 'obrigacao_legal']
 
     def save(self, commit=True):
         

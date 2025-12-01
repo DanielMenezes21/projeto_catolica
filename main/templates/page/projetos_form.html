@@ -29,6 +29,11 @@
     </p>
 
     <p>
+      <label for="id_justificativa">Objetivo / Justificativa</label>
+      {{ form.justificativa }}
+    </p>
+
+    <p>
       <label for="id_nome_projeto">Tipo de Conta</label>
       {{ form.tipo_conta }}
     </p>
@@ -40,7 +45,7 @@
     <h3>Gastos Mensais</h3>
 
     {% for field in form %}
-      {%  if field.name != 'nome_projeto' and field.name != 'tipo_conta' and field.name != 'codigo_produto' and field.name != 'valor_total' and field.name != 'e_recorrente' and field.name != 'obrigacao_legal' %}
+      {% if field.name not in campos_excluir %}
         <div>
           <button type="button" class="mes-toggle" data-mes="{{ field.name }}">➕ {{ field.label }}</button>
           <div class="mes-campo" id="campo-{{ field.name }}">

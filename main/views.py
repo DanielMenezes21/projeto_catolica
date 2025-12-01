@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .forms import ProjetoForm
+from .forms import ProjetoForm, CAMPOS_EXCLUIR_MESES
 from .models import Projeto
 from .excel_file.excel_constructor import create_projetos_excel_response
 import pandas as pd
@@ -13,7 +13,11 @@ def criar_projeto(request):
             return redirect('listar_projetos')
     else:
         form = ProjetoForm()
-    return render(request, 'page/projetos_form.html', {'form': form})
+    
+    return render(request, 'page/projetos_form.html', {
+        'form': form,
+        'campos_excluir': CAMPOS_EXCLUIR_MESES
+    })
 
 
 def listar_projetos(request):
