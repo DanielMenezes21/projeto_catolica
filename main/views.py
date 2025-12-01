@@ -53,4 +53,9 @@ def editar_projeto(request, projeto_id):
     else:
         form = ProjetoForm(instance=projeto)
     
-    return render(request, 'page/projetos_form.html', {'form': form, 'edit': True, 'projeto': projeto})
+    return render(request, 'page/projetos_form.html', {
+         'form': form,
+         'edit': True,
+         'projeto': projeto,
+         'campos_excluir': CAMPOS_EXCLUIR_MESES
+     })
