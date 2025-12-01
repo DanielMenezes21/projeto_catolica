@@ -21,7 +21,11 @@
   </style>
 </head>
 <body>
-  <h1>Criar Projeto</h1>
+  {% if edit %}
+    <h1>Editar Projeto</h1>
+  {% else %}
+    <h1>Criar Projeto</h1>
+  {% endif %}
 
   <form method="post">
     {% csrf_token %}
@@ -73,7 +77,11 @@
     </p>
 
     <br>
-    <button type="submit">Salvar</button>
+    {% if edit %}
+      <button type="submit">Atualizar Projeto</button>
+    {% else %}
+      <button type="submit">Salvar Projeto</button>
+    {% endif %}
   </form>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>

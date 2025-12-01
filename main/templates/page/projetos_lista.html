@@ -17,6 +17,7 @@
       <th>Total</th>
       <th>É Recorrente?</th>
       <th>Obrigação Legal?</th>
+      <th>Ações</th>
     </tr>
     {% for p in projetos %}
     <tr>
@@ -36,6 +37,15 @@
       <td>R$ {{ p.valor_total|floatformat:2 }}</td>
       <td>{{ p.e_recorrente }}</td>
       <td>{{ p.obrigacao_legal }}</td>
+      <td class="acoes">
+        <a href="{% url 'editar_projeto' p.id %}" class="btn-editar" title="Editar projeto">✏️</a>
+        <form method="post" action="{% url 'deletar_projeto' p.id %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn-deletar" title="Deletar projeto" onclick="return confirm('Tem certeza que deseja deletar este projeto?');">
+            🗑️
+          </button>
+        </form>
+      </td>
     </tr>
     {% endfor %}
   </table>
