@@ -35,7 +35,6 @@ def deletar_projeto(request, projeto_id):
         pass
     return redirect('listar_projetos')
 
-
 def editar_projeto(request, projeto_id):
     try:
         projeto = Projeto.objects.get(id=projeto_id)
@@ -51,6 +50,3 @@ def editar_projeto(request, projeto_id):
         form = ProjetoForm(instance=projeto)
     
     return render(request, 'page/projetos_form.html', {'form': form, 'edit': True, 'projeto': projeto})
-
-
-
