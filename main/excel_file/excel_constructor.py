@@ -11,7 +11,7 @@ MESES_ORDEM = [
 ]
 
 
-def create_projetos_excel_response(projetos, filename="projetos.xlsx", gestor=None, setor=None, centro_custo=None):
+def create_projetos_excel_response(projetos, filename="PLANEJAMENTO ORÇAMENTÁRIO.xlsx", gestor=None, setor=None, centro_custo=None):
 
     template_path = os.path.join(
         settings.BASE_DIR,
