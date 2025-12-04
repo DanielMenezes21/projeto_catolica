@@ -28,7 +28,11 @@ def listar_projetos(request):
 def exportar_planilha(request):
     # Usamos o helper que cria um arquivo Excel estilizado com openpyxl
     projetos = Projeto.objects.all()
-    return create_projetos_excel_response(projetos, filename='projetos.xlsx')
+    # ler nome do gestor e setor via query params (se fornecidos)
+    gestor = request.GET.get('nome_gestor') or request.GET.get('gestor')
+    setor = request.GET.get('setor')
+    centro_custo = request.GET.get('centro_custo')
+    return create_projetos_excel_response(projetos, filename='projetos.xlsx', gestor=gestor, setor=setor, centro_custo=centro_custo)
 
 
 def deletar_projeto(request, projeto_id):

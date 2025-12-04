@@ -3,6 +3,7 @@ from io import BytesIO
 from django.http import HttpResponse
 from django.conf import settings
 from openpyxl import load_workbook
+from openpyxl.styles import Alignment
 
 MESES_ORDEM = [
     "janeiro", "fevereiro", "marco", "abril", "maio", "junho",
@@ -10,7 +11,7 @@ MESES_ORDEM = [
 ]
 
 
-def create_projetos_excel_response(projetos, filename="projetos.xlsx"):
+def create_projetos_excel_response(projetos, filename="projetos.xlsx", gestor=None, setor=None, centro_custo=None):
 
     template_path = os.path.join(
         settings.BASE_DIR,
@@ -29,9 +30,20 @@ def create_projetos_excel_response(projetos, filename="projetos.xlsx"):
     # ======================================================================
     LINHA_PROJ = 5  # onde começam os projetos
 
-    # ⚠️ Ajuste se desejar: valores fixos no cabeçalho
-    # ws_proj["B2"] = "GESTOR EXEMPLO"
-    # ws_proj["D2"] = "SETOR EXEMPLO"
+    # Preencher Gestor e Setor (se fornecidos)
+    if gestor:
+        ws_proj["B2"] = gestor
+        ws_proj["B2"].alignment = Alignment(wrap_text=True)
+    if setor:
+        ws_proj["D2"] = setor
+        ws_proj["D2"].alignment = Alignment(wrap_text=True)
+    # escreve Centro de Custo na aba Orçamento célula A2 se informado
+    if centro_custo:
+        try:
+            ws_orc["A2"] = centro_custo
+            ws_orc["A2"].alignment = Alignment(wrap_text=True)
+        except Exception:
+            pass
 
     linha_p = LINHA_PROJ
 
@@ -42,11 +54,12 @@ def create_projetos_excel_response(projetos, filename="projetos.xlsx"):
         # Nome do projeto
         ws_proj[f"A{linha_p}"] = p.nome_projeto
 
-        # Objetivo / Justificativa → supondo que está em "objetivo" no model
-        try:
-            ws_proj[f"B{linha_p}"] = p.objetivo
-        except:
-            ws_proj[f"B{linha_p}"] = ""
+        # Objetivo / Justificativa → escreve em B5, B6, ...
+        justificativa = getattr(p, 'justificativa', '') or ''
+        ws_proj[f"B{linha_p}"] = justificativa
+        # aplica quebra de linha e alinhamento para justificativa
+        cell_just = ws_proj[f"B{linha_p}"]
+        cell_just.alignment = Alignment(wrap_text=True, vertical='top')
 
         # Recorrência
         ws_proj[f"C{linha_p}"] = "Sim" if p.e_recorrente else "Não"

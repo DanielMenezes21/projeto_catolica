@@ -62,11 +62,45 @@
       <label for="setor">Setor:</label>
       <input type="text" id="setor" placeholder="Digite o setor" style="width: 100%; padding: 8px; margin-top: 5px;">
     </p>
+
+    <p>
+      <label for="centro_custo">Centro de Custo:</label>
+      <select id="centro_custo" style="width: 100%; padding: 8px; margin-top: 5px;">
+        <option value="">-- Selecionar Centro de Custo --</option>
+      </select>
+    </p>
   </div>
 
   <div class="button-container">
-    <a href="{% url 'exportar_planilha' %}" class="button export-button">📊 Exportar para Excel</a>
+    <a href="#" id="export-link" class="button export-button">📊 Exportar para Excel</a>
     <a href="{% url 'criar_projeto' %}" class="button new-button">➕ Novo Projeto</a>
   </div>
+
+  <script>
+    // preenche o dropdown de centro de custo a partir do JSON
+    fetch('{% static "data/centro_custo.json" %}')
+      .then(res => res.json())
+      .then(list => {
+        const sel = document.getElementById('centro_custo');
+        list.forEach(item => {
+          const opt = document.createElement('option');
+          opt.value = item.code + ' - ' + item.name;
+          opt.textContent = item.code + ' - ' + item.name;
+          sel.appendChild(opt);
+        });
+      }).catch(err => console.error('Erro carregando centros de custo:', err));
+
+    // Quando clicar em exportar, pega os valores dos inputs e redireciona com query params
+    document.getElementById('export-link').addEventListener('click', function (e) {
+      e.preventDefault();
+      const gestor = encodeURIComponent(document.getElementById('nome_gestor').value || '');
+      const setor = encodeURIComponent(document.getElementById('setor').value || '');
+      const centro = encodeURIComponent(document.getElementById('centro_custo').value || '');
+      // monta a url de exportação com query params
+      const url = '{% url "exportar_planilha" %}';
+      const sep = url.includes('?') ? '&' : '?';
+      window.location.href = url + sep + 'nome_gestor=' + gestor + '&setor=' + setor + '&centro_custo=' + centro;
+    });
+  </script>
 </body>
 </html>

@@ -1,0 +1,50 @@
+0.02.2.2.01 - Administração
+0.02.2.2.03 - Ciências Contábeis
+0.02.2.2.05 - Direito
+0.02.2.2.07 - Agronomia
+0.02.2.2.09 - Zootecnia
+0.02.2.2.13 - ENGENHARIA ELÉTRICA
+0.02.2.2.14 - Engenharia de Produção
+0.02.2.2.15 - ENG. AMBIENTAL
+0.02.2.2.16 - Engenharia Civil
+0.02.2.2.18 - Medicina veterinária
+0.02.2.2.19 - Arquitetura e Urbanismo
+0.02.2.2.23 - Engenharia de Software
+0.02.2.2.24 - Enfermagem
+0.02.2.2.25 - Psicologia
+0.02.2.2.26 - Nutrição
+0.02.2.2.28 - Fisioterapia
+0.02.2.2.33 - Biomedicina
+0.02.2.2.37 - Terapia Ocupacional
+0.02.2.2.38 - Farmácia
+0.02.2.2.39 - Inteligência Artificial
+0.02.3.3.14 - ENGENHARIA DE SANEAMENTO BÁSICO E AMB.
+0.02.3.3.16 - CLÍNICA E CIRURGIA DE PEQUENOS ANIMAIS
+0.02.3.3.30 - Manejo de Solos Tropicais
+0.02.1.5.03 - NPJ - Núcleo de Práticas Jurídicas
+0.02.1.6.01 - Clinica Veterinária
+0.02.2.5.01 - Coordenação de Laboratórios
+0.02.1.1.03 - CEPEX - Centro de Pesquisa e Extensão
+0.02.1.1.09 - Central de Estágios
+0.02.1.0.01 - REITORIA
+0.02.1.0.02 - CM TO
+0.02.1.0.06 - INTERNACIONALIZAÇÃO
+0.02.1.0.07 - NAP - NÚCLEO DE APOIO PSICOPEDAGOGICO
+0.02.1.0.10 - GESTÃO DE PESSOAS
+0.02.1.0.11 - GCM MANTENEDORA
+0.02.1.0.12 - GCM Comercial
+0.02.1.1.01 - PRÓ REITORIA ACADÊMICA
+0.02.1.1.02 - NADIME
+0.02.1.5.01 - Biblioteca
+0.02.4.1.02 - Pastoralidade
+0.02.4.1.04 - Ouvidoria
+0.02.5.0.01 - PRO REITORIA DE ADMINISTRAÇÃO
+0.02.5.1.01 - TI - Tecnologia da Informação
+0.02.5.2.01 - COORDENAÇÃO ADMINISTRATIVA
+0.02.5.7.01 - Comercial - UniCatólica
+0.02.7.0.01 - Centro de Apoio
+0.02.7.0.02 - Centro de Apoio Campus II
+0.02.7.0.03 - MANUTENÇÃO I
+0.02.7.0.05 - SERVIÇOS GERAIS I
+0.02.7.0.10 - PCB - FACTO
+0.02.8.0.02 - CPA
