@@ -40,3 +40,13 @@ class Projeto(models.Model):
         if not self.valores_mensais:
             return "-"
         return ", ".join([f"{mes}: R$ {valor:.2f}" for mes, valor in self.valores_mensais.items()])
+
+
+class ProjetoContaValor(models.Model):
+    projeto = models.ForeignKey(Projeto, on_delete=models.CASCADE, related_name='contas_valores')
+    conta_contabil = models.CharField(max_length=255)
+    valores_mensais = models.JSONField(encoder=DjangoJSONEncoder, default=dict, blank=True)
+    valor_total = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+
+    def __str__(self):
+        return f"{self.projeto.nome_projeto} - {self.conta_contabil}"

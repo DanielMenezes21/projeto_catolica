@@ -80,29 +80,33 @@ def create_projetos_excel_response(projetos, filename="PLANEJAMENTO ORÇAMENTÁR
     linha_o = LINHA_ORC
 
     for p in projetos:
-
-        valores = p.valores_mensais or {}
-
-        # Nome do Projeto
-        ws_orc[f"A{linha_o}"] = p.nome_projeto
-
-        # Tipo de despesa
-        ws_orc[f"B{linha_o}"] = p.tipo_conta
-
-        # Conta contábil (código do produto)
-        ws_orc[f"C{linha_o}"] = p.codigo_produto
-
-        # Meses (D → O)
-        col_base = 4  # coluna D = 4
-        for i, mes in enumerate(MESES_ORDEM):
-            col = col_base + i
-            val = valores.get(mes)
-            ws_orc.cell(row=linha_o, column=col).value = float(val) if val else 0
-
-        # Total na coluna P
-        ws_orc[f"P{linha_o}"] = p.valor_total
-
-        linha_o += 1
+        # Se existirem contas vinculadas, escrever uma linha por conta
+        contas = getattr(p, 'contas_valores', None)
+        if contas is not None and hasattr(contas, 'all') and contas.all():
+            for pcv in contas.all():
+                ws_orc[f"A{linha_o}"] = p.nome_projeto
+                ws_orc[f"B{linha_o}"] = p.tipo_conta
+                ws_orc[f"C{linha_o}"] = pcv.conta_contabil
+                col_base = 4
+                for i, mes in enumerate(MESES_ORDEM):
+                    col = col_base + i
+                    val = (pcv.valores_mensais or {}).get(mes)
+                    ws_orc.cell(row=linha_o, column=col).value = float(val) if val else 0
+                ws_orc[f"P{linha_o}"] = pcv.valor_total
+                linha_o += 1
+        else:
+            # fallback: projeto tem valores mensais no nível do projeto
+            valores = p.valores_mensais or {}
+            ws_orc[f"A{linha_o}"] = p.nome_projeto
+            ws_orc[f"B{linha_o}"] = p.tipo_conta
+            ws_orc[f"C{linha_o}"] = p.codigo_produto
+            col_base = 4
+            for i, mes in enumerate(MESES_ORDEM):
+                col = col_base + i
+                val = valores.get(mes)
+                ws_orc.cell(row=linha_o, column=col).value = float(val) if val else 0
+            ws_orc[f"P{linha_o}"] = p.valor_total
+            linha_o += 1
 
     # ======================================================================
     # RETORNO DO ARQUIVO GERADO

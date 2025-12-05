@@ -88,19 +88,9 @@ class ProjetoForm(forms.ModelForm):
             'style': 'width: 100%;'
         })
     )
-
-    # Campos mensais opcionais
-    for mes, label in MESES:
-        locals()[mes] = forms.DecimalField(
-            label=label,
-            required=False,
-            min_value=0,
-            widget=forms.TextInput(attrs={
-                'placeholder': 'Digite o valor (ex: 1200)',
-                'inputmode': 'decimal',
-            })
-        )
     
+    # Nota: os valores mensais agora são informados por conta contábil.
+    # Os campos de mês serão gerados dinamicamente no frontend (um bloco por conta selecionada).
     valor_total = forms.DecimalField(
         label='Total',
         required=False,
@@ -130,19 +120,8 @@ class ProjetoForm(forms.ModelForm):
     def save(self, commit=True):
         
         instance = super().save(commit=False)
-        valores = {}
-        total = 0
-
-        # Coleta apenas os meses preenchidos
-        for mes, _ in MESES:
-            valor = self.cleaned_data.get(mes)
-            if valor is not None and valor > 0:
-                valores[mes] = float(valor)
-                total += float(valor)
-
-        instance.valores_mensais = valores
-        instance.valor_total = total
-
+        # Não salvamos mais os valores mensais diretamente aqui; eles serão
+        # processados no view e salvos no modelo ProjetoContaValor.
         codigos_selecionados = self.cleaned_data.get('codigo_produto', [])
         instance.codigo_produto = ', '.join(codigos_selecionados) if codigos_selecionados else ''
 

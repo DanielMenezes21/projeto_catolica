@@ -13,7 +13,6 @@
       <th>Objetivo / justificativa</th>
       <th>Tipo de Conta</th>
       <th>Código do Produto</th>
-      <th>Valores Mensais</th>
       <th>Total</th>
       <th>É Recorrente?</th>
       <th>Obrigação Legal?</th>
@@ -25,15 +24,6 @@
       <td>{{ p.justificativa }}</td>
       <td>{{ p.tipo_conta }}</td>
       <td>{{ p.codigo_produto }}</td>
-      <td>
-        {% if p.valores_mensais %}
-          {% for mes, valor in p.valores_mensais.items %}
-            <strong>{{ mes|title }}:</strong> R$ {{ valor|floatformat:2 }}<br>
-          {% endfor %}
-        {% else %}
-          -
-        {% endif %}
-      </td>
       <td>R$ {{ p.valor_total|floatformat:2 }}</td>
       <td>{{ p.e_recorrente }}</td>
       <td>{{ p.obrigacao_legal }}</td>
@@ -76,31 +66,10 @@
     <a href="{% url 'criar_projeto' %}" class="button new-button">➕ Novo Projeto</a>
   </div>
 
+  <!-- Passa a URL de exportação para o script externo -->
   <script>
-    // preenche o dropdown de centro de custo a partir do JSON
-    fetch('{% static "data/centro_custo.json" %}')
-      .then(res => res.json())
-      .then(list => {
-        const sel = document.getElementById('centro_custo');
-        list.forEach(item => {
-          const opt = document.createElement('option');
-          opt.value = item.code + ' - ' + item.name;
-          opt.textContent = item.code + ' - ' + item.name;
-          sel.appendChild(opt);
-        });
-      }).catch(err => console.error('Erro carregando centros de custo:', err));
-
-    // Quando clicar em exportar, pega os valores dos inputs e redireciona com query params
-    document.getElementById('export-link').addEventListener('click', function (e) {
-      e.preventDefault();
-      const gestor = encodeURIComponent(document.getElementById('nome_gestor').value || '');
-      const setor = encodeURIComponent(document.getElementById('setor').value || '');
-      const centro = encodeURIComponent(document.getElementById('centro_custo').value || '');
-      // monta a url de exportação com query params
-      const url = '{% url "exportar_planilha" %}';
-      const sep = url.includes('?') ? '&' : '?';
-      window.location.href = url + sep + 'nome_gestor=' + gestor + '&setor=' + setor + '&centro_custo=' + centro;
-    });
+    const EXPORT_URL = '{% url "exportar_planilha" %}';
   </script>
+  <script src="{% static 'js/projetos_lista.js' %}"></script>
 </body>
 </html>

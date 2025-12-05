@@ -18,6 +18,21 @@
         border-radius: 4px;
         background-color: white;
       }
+    .mes-grid{
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .mes-grid .mes-item{
+      display: flex;
+      flex-direction: column;
+      font-size: 13px;
+    }
+    .mes-grid input[inputmode="decimal"]{
+      width: 100%;
+      box-sizing: border-box;
+    }
   </style>
 </head>
 <body>
@@ -48,18 +63,11 @@
       {{ form.codigo_produto }}
     </p>
 
-    <h3>Gastos Mensais</h3>
+    <h3>Gastos Mensais por Conta</h3>
 
-    {% for field in form %}
-      {% if field.name not in campos_excluir %}
-        <div>
-          <button type="button" class="mes-toggle" data-mes="{{ field.name }}">➕ {{ field.label }}</button>
-          <div class="mes-campo" id="campo-{{ field.name }}">
-            {{ field }}
-          </div>
-        </div>
-      {% endif %}
-    {% endfor %}
+    <p style="color: #666;">Selecione as contas acima e preencha os valores mensais para cada conta. Cada conta terá seu próprio conjunto de 12 meses.</p>
+
+    <div id="contas-container"></div>
 
     <p>
       <label for="id_e_recorrente">É Recorrente?</label>
@@ -85,38 +93,12 @@
   </form>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
+  <!-- Dados iniciais para pré-preenchimento (se em modo edição) -->
   <script>
-    $(document).ready(function() {
-      $('#id_codigo_produto').select2({
-        placeholder: 'Selecione as contas...',
-        allowClear: true
-      });
-    });
-
-    document.querySelectorAll('input[type="number"], input[inputmode="decimal"]').forEach(input => {
-      input.addEventListener('change', calcularTotal);
-    });
-
-    function calcularTotal() {
-      let total = 0;
-      document.querySelectorAll('input[inputmode="decimal"]').forEach(input => {
-        if (input.value) {
-          total += parseFloat(input.value) || 0;
-        }
-      });
-      document.getElementById('id_valor_total').value = total.toFixed(2);
-    }
-
-    document.querySelectorAll('.mes-toggle').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const mes = btn.dataset.mes;
-        const campo = document.getElementById(`campo-${mes}`);
-        const aberto = campo.style.display === 'block';
-        campo.style.display = aberto ? 'none' : 'block';
-        btn.textContent = (aberto ? '➕ ' : '➖ ') + btn.textContent.slice(2);
-      });
-    });
+    const CONTAS_INITIAL = {{ contas_data|default:'[]'|safe }};
   </script>
+  <!-- Script externo da lógica do formulário -->
+  <script src="{% static 'js/projetos_form.js' %}"></script>
 </body>
 </html>
 
