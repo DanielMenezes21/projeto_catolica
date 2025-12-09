@@ -1,4 +1,5 @@
 import os
+import time
 from io import BytesIO
 from django.http import HttpResponse
 from django.conf import settings
@@ -11,7 +12,20 @@ MESES_ORDEM = [
 ]
 
 
-def create_projetos_excel_response(projetos, filename="PLANEJAMENTO ORÇAMENTÁRIO.xlsx", gestor=None, setor=None, centro_custo=None):
+def set_sheet_title(ws, texto):
+    ws["A1"] = texto
+    ws["A1"].alignment = Alignment(wrap_text=True, vertical='center', horizontal='center')
+
+
+def create_projetos_excel_response(
+    projetos,
+    filename="PLANEJAMENTO ORÇAMENTÁRIO.xlsx",
+    gestor=None,
+    setor=None,
+    centro_custo=None,
+    titulo_projetos=None,
+    titulo_orcamento=None
+):
 
     template_path = os.path.join(
         settings.BASE_DIR,
@@ -24,6 +38,17 @@ def create_projetos_excel_response(projetos, filename="PLANEJAMENTO ORÇAMENTÁR
 
     ws_proj = wb["Projetos"]
     ws_orc = wb["Orçamento"]
+
+    # Ano atual + 1
+    ano = time.localtime().tm_year + 1
+    if not titulo_projetos:
+        titulo_projetos = f"PLANEJAMENTO UNICATÓLICA {ano} - PROPOSTA DE PROJETOS/ATIVIDADES"
+    if not titulo_orcamento:
+        titulo_orcamento = f"PROPOSTA DE PROJETOS - PLANEJAMENTO UNICATÓLICA {ano}"
+
+    # Inserir título nas abas
+    set_sheet_title(ws_proj, titulo_projetos)
+    set_sheet_title(ws_orc, titulo_orcamento)
 
     # ======================================================================
     # ABA PROJETOS
