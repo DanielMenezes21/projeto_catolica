@@ -69,11 +69,38 @@ h3 {
     margin: 5px 0 15px 0;
     border-left: 3px solid #007bff;
     background-color: #f8f9fa;
+    display: none;
 }
 
 .mes-campo input {
     width: calc(100% - 20px);
     margin: 5px 10px;
+}
+
+select#id_codigo_produto {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.mes-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.mes-grid .mes-item {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+}
+
+.mes-grid input[inputmode="decimal"] {
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Botão de salvar */

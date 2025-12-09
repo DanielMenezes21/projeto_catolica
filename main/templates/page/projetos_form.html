@@ -6,34 +6,7 @@
   <link rel="stylesheet" href="{% static 'css/projetos_form.css' %}">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css" rel="stylesheet" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <style>
-    .mes-campo {
-      display: none;
-    }
-
-    select#id_codigo_produto {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        background-color: white;
-      }
-    .mes-grid{
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    .mes-grid .mes-item{
-      display: flex;
-      flex-direction: column;
-      font-size: 13px;
-    }
-    .mes-grid input[inputmode="decimal"]{
-      width: 100%;
-      box-sizing: border-box;
-    }
-  </style>
+  <!-- Estilos movidos para projetos_form.css -->
 </head>
 <body>
   {% if edit %}
